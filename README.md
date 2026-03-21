@@ -107,6 +107,7 @@ Create a .env file using .env.example:
 GROQ_API_KEY=your_api_key_here
 HF_TOKEN=your_huggingface_token_here
 SECRET_KEY=your_secret_key_here
+
 🌐 API Endpoints
 Endpoint	Description
 /items/branches	Get branches
@@ -115,9 +116,9 @@ Endpoint	Description
 /items/files	Get PDFs
 /items/view	View PDF
 /items/download	Download PDF
-📸 Screenshots (Add Later)
+📸 Screenshots 
 
-Add app screenshots here for better presentation
+
 
 🧠 Future Improvements
 📄 In-app PDF viewer
