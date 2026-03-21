@@ -1,0 +1,17 @@
+flask
+flask-cors
+sentence-transformers
+faiss-cpu
+spacy
+nltk
+pypdf
+numpy
+scikit-learn
+python-dotenv
+tqdm
+groq
+pyspellchecker
+pytesseract
+pdf2image
+pillow
+python-dotenv
