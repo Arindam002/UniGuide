@@ -6,7 +6,6 @@ spacy
 nltk
 pypdf
 numpy
-scikit-learn
 python-dotenv
 tqdm
 groq
