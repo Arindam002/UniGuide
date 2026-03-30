@@ -11,7 +11,7 @@ class ChatApiService {
       return "http://10.0.2.2:5000";
     }
     // Physical device / desktop
-    return "http://10.188.239.23:5000";
+    return "http://10.150.56.23:5000";
   }
 
   /// 🔥 MAIN API CALL
