@@ -1,6 +1,8 @@
 import json
 from flask import Blueprint, request, jsonify, Response
 
+import config
+from app.extensions import limiter
 from app.services.rag_service import RagService
 from app.nlp.nlp_pipeline import NLPPipeline
 from app.memory import chat_memory
@@ -203,6 +205,8 @@ def prepare_chat_context(data):
     }, None, None
 
 @chat_bp.route("/stream", methods=["POST"])
+@limiter.limit(f"{config.CHAT_RATE_LIMIT_PER_DAY} per day")
+@limiter.limit(f"{config.CHAT_RATE_LIMIT_PER_MINUTE} per minute")
 def chat_stream():
     data = request.get_json(silent=True)
     if not isinstance(data, dict):
@@ -372,6 +376,8 @@ def chat_stream():
 
 
 @chat_bp.route("/", methods=["POST"])
+@limiter.limit(f"{config.CHAT_RATE_LIMIT_PER_DAY} per day")
+@limiter.limit(f"{config.CHAT_RATE_LIMIT_PER_MINUTE} per minute")
 def chat():
     data = request.get_json(silent=True)
     if not isinstance(data, dict):

@@ -1,0 +1,29 @@
+.git
+.env
+**/.env
+.venv/
+venv/
+**/.venv/
+**/venv/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+**/.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+tests/
+**/tests/
+test_*.py
+*_test.py
+tempCodeRunnerFile.*
+scripts/
+database/uniguide_eval.db
+database/test.txt
+app/vector_db/faiss_index/books_index.faiss
+app/vector_db/faiss_index/pyqs_index.faiss
+app/vector_db/faiss_index/index.faiss
+
+# PDF files remain in the image because the /items endpoints serve them.
+# Flat indexes are legacy; the app uses the validated namespace indexes.

@@ -1,8 +1,28 @@
 import os
+from pathlib import Path, PurePosixPath
 from flask import Blueprint, jsonify, send_file
 from database.db import get_connection
 
 diagram_bp = Blueprint("diagram_bp", __name__, url_prefix="/diagrams")
+BACKEND_DIR = Path(__file__).resolve().parents[2]
+
+
+def _resolve_diagram_path(image_path):
+    if not image_path or os.path.isfile(image_path):
+        return image_path
+
+    path_parts = PurePosixPath(str(image_path).replace("\\", "/")).parts
+    try:
+        diagrams_index = next(
+            index
+            for index, part in enumerate(path_parts)
+            if part.lower() == "extracted_diagrams"
+        )
+    except StopIteration:
+        return image_path
+
+    container_path = BACKEND_DIR.joinpath(*path_parts[diagrams_index:])
+    return str(container_path) if container_path.is_file() else image_path
 
 
 @diagram_bp.route("/view/<int:diagram_id>", methods=["GET"])
@@ -35,6 +55,7 @@ def view_diagram(diagram_id):
             return jsonify({"error": "Diagram not found"}), 404
 
         _, image_path, caption, page_number, document_id, document_name, category = row
+        image_path = _resolve_diagram_path(image_path)
 
         if not image_path or not os.path.exists(image_path):
             return jsonify({
@@ -108,7 +129,7 @@ def diagram_meta(diagram_id):
             "id": row[0],
             "document_id": row[1],
             "page_number": row[2],
-            "image_path": row[3],
+            "image_path": _resolve_diagram_path(row[3]),
             "caption": row[4],
             "context_text": row[5],
             "document_name": row[6],
@@ -168,7 +189,7 @@ def diagrams_by_document(document_id):
                 "id": row[0],
                 "page_number": row[1],
                 "caption": row[2],
-                "image_path": row[3],
+                "image_path": _resolve_diagram_path(row[3]),
                 "document_name": row[4],
                 "category": row[5],
                 "subject": row[6],

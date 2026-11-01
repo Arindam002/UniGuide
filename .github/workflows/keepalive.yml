@@ -1,0 +1,21 @@
+name: Keep Hugging Face Space awake
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  keepalive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Space health endpoint
+        env:
+          SPACE_URL: ${{ vars.SPACE_URL }}
+        run: |
+          # GitHub disables scheduled workflows after 60 days without repository activity.
+          if [ -z "$SPACE_URL" ]; then
+            echo "SPACE_URL is unset; skipping keep-alive."
+            exit 0
+          fi
+          curl -fsS "${SPACE_URL%/}/health" >/dev/null

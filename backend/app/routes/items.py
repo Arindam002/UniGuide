@@ -1,5 +1,6 @@
 import os
 from flask import Blueprint, request, jsonify, send_file, abort
+import config
 
 items_bp = Blueprint("items", __name__)
 
@@ -134,6 +135,9 @@ def get_files():
 # ---------------------------
 @items_bp.route("/view", methods=["GET"])
 def view_file():
+    if config.DISABLE_FILE_DOWNLOADS:
+        return jsonify({"error": "File downloads are disabled"}), 403
+
     file_path = request.args.get("file_path")
 
     if not file_path:
@@ -156,6 +160,9 @@ def view_file():
 # ---------------------------
 @items_bp.route("/download", methods=["GET"])
 def download_file():
+    if config.DISABLE_FILE_DOWNLOADS:
+        return jsonify({"error": "File downloads are disabled"}), 403
+
     file_path = request.args.get("file_path")
 
     if not file_path:

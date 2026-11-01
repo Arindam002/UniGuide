@@ -1,6 +1,7 @@
 import sqlite3
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
+import config
 from app.utils.jwt_utils import generate_token, generate_reset_token, verify_reset_token
 from database.db import get_connection
 
@@ -312,7 +313,7 @@ def forgot_password():
         return jsonify({"error": "Email not found"}), 404
 
     reset_token = generate_reset_token(row["id"])
-    reset_link = f"http://localhost:3000/reset-password?token={reset_token}"
+    reset_link = f"{config.PASSWORD_RESET_URL}?token={reset_token}"
 
     return jsonify({
         "message": "Password reset link generated",
