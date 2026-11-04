@@ -46,7 +46,7 @@ Python dependency versions are not pinned in `backend/requirements.txt`; install
 - `flutter_highlight` for language-aware fenced code blocks, with horizontal scrolling and a copy button
 - Chat conversations are stored locally; only the 10 most recently updated are retained, with older entries removed automatically.
 - REST API calls to Flask; the backend also exposes an SSE-framed `/chat/stream` endpoint that sends the completed answer as a final event rather than token-by-token output.
-- `API_HOST` can be supplied at Flutter build/run time. Defaults are `127.0.0.1:5000` for web/desktop and `10.0.2.2:5000` for the Android emulator.
+- `API_HOST` can be supplied at Flutter build/run time as a full `http://` or `https://` URL, or as a hostname with an optional port (which defaults to HTTP). Defaults are `http://127.0.0.1:5000` for web/desktop and `http://10.0.2.2:5000` for the Android emulator.
 
 ## Setup
 
